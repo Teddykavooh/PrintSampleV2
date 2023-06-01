@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Print Sample</string>
+    <string name="enter_text_to_print">Enter text to print below:</string>
+    <string name="enter_your_text_here">Enter your text here…</string>
+    <string name="text_goes_here">Text goes here!</string>
+    <string name="status">Printer Status:</string>
+    <string name="printer_status">Status:</string>
+    <string name="print">PRINT</string>
+    <string name="on">ACTIVATE PRINT</string>
+    <string name="off">DEACTIVATE PRINT</string>
+    <string name="settings">Settings</string>
+    <string name="re_config">Re-Config</string>
+    <string name="exit">Exit</string>
+    <string name="open_print">Open Print</string>
+</resources>

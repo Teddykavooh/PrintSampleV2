@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.printsample.v2.MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/enter_text_to_print"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:id="@+id/textView"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/textView"
+        android:text="@string/enter_your_text_here"
+        android:autofillHints="Text goes here!"
+        android:hint="@string/text_goes_here"
+        android:inputType="textLongMessage"
+        android:id="@+id/editText"
+        android:textSize="20sp"
+        android:background="#ddd"
+        android:padding="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:id="@+id/button"
+        android:layout_below="@+id/editText"
+        android:layout_marginTop="10dp"
+        android:layout_centerInParent="true"
+        android:text="@string/print"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:onClick="onClickPrint"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/button"
+        android:layout_marginTop="10dp"
+        android:text="@string/status"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:id="@+id/textView2"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/textView2"
+        android:id="@+id/textView3"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="#FF0000"
+        android:textSize="20sp"
+        android:hint="@string/printer_status"
+        android:padding="50dp"
+        android:textColorHint="#000000"
+        android:background="#ddd"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp" />
+
+    <Button
+        android:id="@+id/printOn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/on"
+        android:background="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:onClick="turnOn" />
+
+    <Button
+        android:id="@+id/printOff"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/off"
+        android:visibility="invisible"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:onClick="turnOff" />
+
+</RelativeLayout>
