@@ -9,3 +9,10 @@ Printing demo as per CS10, CS10C, CS30 SDKs.
 <img alt="Screenshot_20230601_170224" src="https://github.com/Teddykavooh/PrintSampleV2/assets/39087913/606f25ea-4d8c-41b6-a76a-2a905ce73d6c" width="280" height="auto">
 <!-- ![Screenshot_20230601_170611](https://github.com/Teddykavooh/PrintSampleV2/assets/39087913/35e60a65-f8f5-416b-95a4-514f48aa2a05) -->
 <img alt="Screenshot_20230601_170611" src="https://github.com/Teddykavooh/PrintSampleV2/assets/39087913/35e60a65-f8f5-416b-95a4-514f48aa2a05" width="280" height="auto">
+
+## Video;
+
+
+
+https://github.com/Teddykavooh/PrintSampleV2/assets/39087913/0f3a0ba9-7b5d-4b10-8326-9fcc0f709b41
+
