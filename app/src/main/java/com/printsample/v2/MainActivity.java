@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //Whitelist app
-        AppWhiteListConfig();
+//        AppWhiteListConfig();
 
         setContentView(R.layout.activity_main);
         onButton = findViewById(R.id.printOn);
@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
         else if (item.getItemId() == R.id.setGray) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             // Set the title and message for the dialog
+            builder.setIcon(R.drawable.red_bird_edit);
             builder.setTitle("Set Gray mode:");
             builder.setMessage("Please enter your mode(1~5):");
 
