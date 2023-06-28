@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //Whitelist app
-//        AppWhiteListConfig();
+        AppWhiteListConfig();
 
         setContentView(R.layout.activity_main);
         onButton = findViewById(R.id.printOn);
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 File file = new File(path);
                 File file2 = new File(path2);
                 if (!file.exists() && !file2.exists()) {
-                    if (deviceId.equals("")) {
+                    if (deviceId.equals("dd36c8cb5650979e")) {
                         /*Default:e7171c1fe9945676*/
                         copyFilesToSdCard();
                     } else {
@@ -585,7 +585,8 @@ public class MainActivity extends AppCompatActivity {
     /*Sets up the density of printing
     * Default mode is 3*/
     private int getValue() {
-        if (enteredText.isEmpty()) {
+        Log.e("getValue ", "enteredText: " + enteredText);
+        if (enteredText == null) {
             sp = getSharedPreferences("Gray", MODE_PRIVATE);
             return sp.getInt("value", 3);
         } else {
