@@ -44,10 +44,8 @@ dependencies {
 
     //Necessary files
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    //File from demo
-    //implementation files('libs/A26Library-debug.aar')
+    //Lib files
     implementation files('libs/zxing-core-3.3.0.jar')
-    //File from zip
-    implementation files('libs/A26Library-1.7.0-Standard.aar')
+    implementation files('libs/PosApiSdk.aar')
 
 }

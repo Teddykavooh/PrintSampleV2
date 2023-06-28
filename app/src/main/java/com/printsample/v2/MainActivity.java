@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -16,6 +17,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     final static String TARGET_BASE_PATH = Environment.getExternalStorageDirectory() + "/";
     String deviceId;
     private int my_ret;
-
+    private String enteredText;
     @Override
     public void onStart() {
         super.onStart();
@@ -120,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 File file = new File(path);
                 File file2 = new File(path2);
                 if (!file.exists() && !file2.exists()) {
-                    if (deviceId.equals("808be1b27acb6dc0")) {
+                    if (deviceId.equals("")) {
                         /*Default:e7171c1fe9945676*/
                         copyFilesToSdCard();
                     } else {
@@ -128,8 +131,9 @@ public class MainActivity extends AppCompatActivity {
                         new AlertDialog.Builder(MainActivity.this)
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .setTitle("VERIFICATION")
-                                .setMessage("In need of activation?\n" + "Call 0721555001, 0726465617\n"
-                                        + "or\n" + "email: androidposkenya.co.ke")
+                                .setMessage("In need of activation?\n" + "Call +254721555001, " +
+                                        "+254797847747\n" + "or\n" + "email: androidposkenya.co.ke"
+                                        + "\n" + "Your ID: " + deviceId)
                                 .setNegativeButton("BACK", null)
                                 .show();
                     }
@@ -159,6 +163,45 @@ public class MainActivity extends AppCompatActivity {
             onClickPrintOpen();
             return true;
         }
+        else if (item.getItemId() == R.id.setGray) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            // Set the title and message for the dialog
+            builder.setTitle("Set Gray mode:");
+            builder.setMessage("Please enter your mode(1~5):");
+
+            // Create an EditText view to get user input
+            final EditText gr_editText = new EditText(this);
+            gr_editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            gr_editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)}); // Restrict input to 1 digits
+            builder.setView(gr_editText);
+
+            // Set the positive button and its click listener
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Get the entered text from the EditText
+                    enteredText = gr_editText.getText().toString();
+
+                    // Do something with the entered text
+                    // For example, display a Toast message
+                    Toast.makeText(getApplicationContext(), "Entered Gray Mode: " + enteredText, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // Set the negative button and its click listener
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Cancel button clicked, do something or simply dismiss the dialog
+                    dialog.dismiss();
+                }
+            });
+
+            // Create and show the AlertDialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -171,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         AssetManager assetManager = this.getAssets();
         String[] assets;
         try {
-            Log.i("tag", "copyFileOrDir() "+path);
+            Log.i("tag", "copyFileOrDir() " + path);
             assets = assetManager.list(path);
             if (assets.length == 0) {
                 copyFile(path);
@@ -297,13 +340,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        PosApiHelper.getInstance().SysLogSwitch(0);
+        PosApiHelper.getInstance().SysLogSwitch((byte)0);
+        enableFunctionLaunch(true);
     }
 
     /*Turning printer on*/
     public void turnOn(View v){
         printerStatus = 1;
-        posApiHelper.SysLogSwitch(printerStatus);
+        posApiHelper.SysLogSwitch((byte)printerStatus);
         onButton.setVisibility(View.INVISIBLE);
         offButton.setVisibility(View.VISIBLE);
         Toast.makeText(getApplicationContext(), "Printer turned ON", Toast.LENGTH_SHORT).show();
@@ -314,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
     /*Turning printer off*/
     public void turnOff(View v){
         printerStatus = 0;
-        posApiHelper.SysLogSwitch(0);
+        posApiHelper.SysLogSwitch((byte)0);
         offButton.setVisibility(View.INVISIBLE);
         onButton.setVisibility(View.VISIBLE);
         Toast.makeText(getApplicationContext(), "Printer turned OFF", Toast.LENGTH_SHORT).show();
@@ -331,6 +375,18 @@ public class MainActivity extends AppCompatActivity {
             disablePowerKeyIntent.putExtra("state", false);
         }
         sendBroadcast(disablePowerKeyIntent);
+    }
+
+    //Enable keys back
+    private static final String ENABLE_FUNCTION_LAUNCH_ACTION = "android.intent.action.ENABLE_FUNCTION_LAUNCH";
+    private void enableFunctionLaunch(boolean state) {
+        Intent enablePowerKeyIntent = new Intent(ENABLE_FUNCTION_LAUNCH_ACTION);
+        if (state) {
+            enablePowerKeyIntent.putExtra("state", true);
+        } else {
+            enablePowerKeyIntent.putExtra("state", false);
+        }
+        sendBroadcast(enablePowerKeyIntent);
     }
 
 
@@ -443,6 +499,19 @@ public class MainActivity extends AppCompatActivity {
                     case PRINT_TEXT:
                         msg.what = DISABLE_RG;
                         handler.sendMessage(msg);
+                        /** Font Options
+                         *
+                         * the font type is IBMPlexMono:
+                         * posApiHelper.PrintSetFont((byte) 20, (byte) 20, (byte) 0x00);
+                         * posApiHelper.PrintSetFont((byte) 28, (byte) 28, (byte) 0x00);
+                         *
+                         * the font type is "SHTRIH-FR:
+                         * posApiHelper.PrintSetFont((byte) 16, (byte) 16, (byte) 0x00);
+                         * posApiHelper.PrintSetFont((byte) 24, (byte) 24, (byte) 0x00);
+                         *
+                         * Zoom：
+                         * Font set as bold and bigger, value 0x00 or 0x33
+                         */
                         posApiHelper.PrintSetFont((byte) 26, (byte) 26, (byte) 0x00);
                         posApiHelper.PrintStr(text + "\n");
                         posApiHelper.PrintStr("        \n");
@@ -512,10 +581,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*Sets up the density of printing*/
+    /*Sets up the density of printing
+    * Default mode is 3*/
     private int getValue() {
-        sp = getSharedPreferences("Gray", MODE_PRIVATE);
-        return sp.getInt("value", 3);
+        if (enteredText.isEmpty()) {
+            sp = getSharedPreferences("Gray", MODE_PRIVATE);
+            return sp.getInt("value", 3);
+        } else {
+            sp = getSharedPreferences("Gray", MODE_PRIVATE);
+            return sp.getInt("value", Integer.parseInt(enteredText));
+        }
     }
 
     /*Handles catching of error messages from print process*/
@@ -567,7 +642,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** Tester Sample */
     public void testApiSample(MenuItem item) {
-        PosApiHelper.getInstance().SysLogSwitch(1);
+        PosApiHelper.getInstance().SysLogSwitch((byte)1);
         PosApiHelper.getInstance().PrintSetVoltage(75);
         my_ret = PosApiHelper.getInstance().PrintCheckStatus();
         if (my_ret == 0) {

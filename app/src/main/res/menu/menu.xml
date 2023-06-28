@@ -10,14 +10,18 @@
                 android:id="@+id/openPrint"
                 android:icon="@drawable/ic_baseline_local_printshop_24"
                 android:title="@string/open_print" />
-            <item android:id="@+id/reConfig"
-                android:icon="@drawable/ic_baseline_publish_24"
-                android:title="@string/re_config" />
+            <item
+                android:id="@+id/setGray"
+                android:icon="@drawable/baseline_colorize_24"
+                android:title="Set Gray" />
             <item
                 android:icon="@drawable/ic_baseline_auto_fix_high_24"
                 android:onClick="testApiSample"
                 android:id="@+id/tester"
                 android:title="Tester" />
+            <item android:id="@+id/reConfig"
+                android:icon="@drawable/ic_baseline_publish_24"
+                android:title="@string/re_config" />
             <item android:id="@+id/exit"
                 android:icon="@drawable/ic_baseline_exit_to_app_24"
                 android:title="@string/exit" />
